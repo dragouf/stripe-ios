@@ -177,10 +177,13 @@ extension PaymentSheet {
         /// See your account's country value here https://dashboard.stripe.com/settings/account
         public let merchantCountryCode: String
 
+        public let cartItems: [PKRecurringPaymentSummaryItem]
+
         /// Initializes a ApplePayConfiguration
-        public init(merchantId: String, merchantCountryCode: String) {
+        public init(merchantId: String, merchantCountryCode: String, cartItems: [PKRecurringPaymentSummaryItem]) {
             self.merchantId = merchantId
-            self.merchantCountryCode = merchantCountryCode
+            self.merchantCountryCode = merchantCountryCode,
+            self.cartItems = cartItems
         }
     }
     

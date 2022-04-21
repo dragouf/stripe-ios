@@ -69,9 +69,13 @@ extension STPApplePayContext {
             paymentRequest = StripeAPI.paymentRequest(withMerchantIdentifier: configuration.merchantId,
                                                           country: configuration.merchantCountryCode,
                                                           currency: "USD") // currency is required but unused
-            paymentRequest.paymentSummaryItems = [
-                PKPaymentSummaryItem(label: "\(merchantName)", amount: .one, type: .pending)
-            ]
+            if (configuration.cartItems.isEmpty) {
+                paymentRequest.paymentSummaryItems = [
+                    PKPaymentSummaryItem(label: "\(merchantName)", amount: .one, type: .pending)
+                ]
+            } else {
+                paymentRequest.paymentSummaryItems = configuration.cartItems
+            }
         }
         let delegate = ApplePayContextClosureDelegate(clientSecret: intent.clientSecret, completion: completion)
         if let applePayContext = STPApplePayContext(paymentRequest: paymentRequest, delegate: delegate) {
